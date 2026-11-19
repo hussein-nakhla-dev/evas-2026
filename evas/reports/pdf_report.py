@@ -76,6 +76,8 @@ def register_fonts() -> tuple[str, str, bool]:
             continue
         try:
             font = TTFont("EVAS", str(reg))
+            if ord("A") not in font.face.charToGlyph:   # skip Arabic-only fonts: no Latin letters
+                continue
             pdfmetrics.registerFont(font)
             pdfmetrics.registerFont(TTFont("EVAS-Bold", str(bold if bold.exists() else reg)))
             pdfmetrics.registerFontFamily("EVAS", normal="EVAS", bold="EVAS-Bold", italic="EVAS", boldItalic="EVAS-Bold")
